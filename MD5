@@ -1,0 +1,10 @@
+0850dd919db6d49a0493a6cf5f1772ba *DESCRIPTION
+2467ed49a5590d61be16a54217598c94 *NAMESPACE
+7c143a70b56d64e20fb3cb79d2eab4ad *R/calibration_simplex.R
+88400316db36ce1b55ddbb1d7a91fc17 *R/calibration_simplex.default.R
+598ae0d7b51adca168c1ccc78eb2157a *R/error.calibration_simplex.R
+541602028c3b0e2b287963cf63be5a1c *R/make_forecasts.calibration_simplex.R
+142efddff1e3ca11b62d1c66a7ec2abb *R/plot.calibration_simplex.R
+f2157bdc0c37904e0dadcd599edc54cf *R/rel_freq.calibration_simplex.R
+0bc14dbeebc76d09b765fb907481a32f *man/calibration_simplex.Rd
+38cd7bb1ab8881d13006c53b1cd00a04 *man/plot.calibration_simplex.Rd
