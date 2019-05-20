@@ -4,9 +4,10 @@
 \alias{plot.calibration_simplex}
 \title{Plot Calibration Simplex}
 \usage{
-\method{plot}{calibration_simplex}(x, true_error = TRUE, error_scale = 0.3,
-  min_bin_freq = 10, plot_error_scale = TRUE, scale_area = NULL,
-  indicate_bins = TRUE, ...)
+\method{plot}{calibration_simplex}(x, true_error = TRUE,
+  error_scale = 0.3, min_bin_freq = 10, plot_error_scale = TRUE,
+  scale_area = NULL, indicate_bins = TRUE, category_labels = c("1",
+  "2", "3"), ...)
 }
 \arguments{
 \item{x}{Object of class \code{calibration_simplex}}
@@ -23,7 +24,9 @@ for it to be plotted.}
 
 \item{scale_area}{Optional. A number by which the areas of the points are scaled. Use if points are to small or to big.}
 
-\item{indicate_bins}{Logical, specifying whether to connect points to their repective bin (center of hexagon).}
+\item{indicate_bins}{Logical, specifying whether to connect points to their respective bin (center of hexagon).}
+
+\item{category_labels}{A vector of length 3 containing the category names, e.g. \code{c("1","2","3")} (default)}
 
 \item{...}{Arguments concerning the title (e.g. \code{main}, \code{cex.main}, \code{col.main} and \code{font.main})
 and subtitle (e.g. \code{sub}, \code{cex.sub}, \code{col.sub} and \code{font.sub}) may be passed here.}

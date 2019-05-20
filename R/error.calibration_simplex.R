@@ -7,16 +7,16 @@ error = function(x,true_error) {
 
 error.calibration_simplex = function(x,
                                      true_error = TRUE) {
-  error = data.frame(a = rep(NA,x$n_bins),
-                     b = rep(NA,x$n_bins))
+  error = data.frame(c1 = rep(NA,x$n_bins),
+                     c3 = rep(NA,x$n_bins))
   if(true_error) {
-    error$a[x$freq > 0] = x$cond_rel_freq_a[x$freq > 0] - x$cond_p_a_ave[x$freq > 0]
-    error$b[x$freq > 0] = x$cond_rel_freq_b[x$freq > 0] - x$cond_p_b_ave[x$freq > 0]
+    error$c3[x$freq > 0] = x$cond_rel_freq_3[x$freq > 0] - x$cond_p3_ave[x$freq > 0]
+    error$c1[x$freq > 0] = x$cond_rel_freq_1[x$freq > 0] - x$cond_p1_ave[x$freq > 0]
   }
   else {
     rounded_forecasts = make_forecasts(x)
-    error$a[x$freq > 0] = x$cond_rel_freq_a[x$freq > 0] - rounded_forecasts$p_a[x$freq > 0]
-    error$b[x$freq > 0] = x$cond_rel_freq_b[x$freq > 0] - rounded_forecasts$p_b[x$freq > 0]
+    error$c3[x$freq > 0] = x$cond_rel_freq_3[x$freq > 0] - rounded_forecasts$p3[x$freq > 0]
+    error$c1[x$freq > 0] = x$cond_rel_freq_1[x$freq > 0] - rounded_forecasts$p1[x$freq > 0]
   }
   return(error)
 }

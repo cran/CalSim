@@ -8,7 +8,8 @@
 #' for it to be plotted.
 #' @param plot_error_scale Logical, specifying whether to plot a scale showing the magnitude of miscalibration errors.
 #' @param scale_area Optional. A number by which the areas of the points are scaled. Use if points are to small or to big.
-#' @param indicate_bins Logical, specifying whether to connect points to their repective bin (center of hexagon).
+#' @param indicate_bins Logical, specifying whether to connect points to their respective bin (center of hexagon).
+#' @param category_labels A vector of length 3 containing the category names, e.g. \code{c("1","2","3")} (default)
 #' @param ... Arguments concerning the title (e.g. \code{main}, \code{cex.main}, \code{col.main} and \code{font.main})
 #'            and subtitle (e.g. \code{sub}, \code{cex.sub}, \code{col.sub} and \code{font.sub}) may be passed here.
 #'
@@ -30,6 +31,7 @@ plot.calibration_simplex = function(x,
                                     plot_error_scale = TRUE,
                                     scale_area = NULL,
                                     indicate_bins = TRUE,
+                                    category_labels = c("1","2","3"),
                                     ...) {
   par_old <- par(no.readonly = TRUE)
   on.exit(par(par_old))
@@ -38,6 +40,8 @@ plot.calibration_simplex = function(x,
   n_bins = x$n_bins
   error = error(x,true_error)
   rel_freq = rel_freq(x)
+
+  if(max(x$freq)<min_bin_freq) stop("Nothing to plot here. Try reducing min_bin_freq (default = 10).")
 
   if(is.null(scale_area)) scale_area = (n/10)^2
 
@@ -64,8 +68,8 @@ plot.calibration_simplex = function(x,
   centers = coords(H_centers)
   ordered_centers = centers[order(centers$x,centers$y),]
 
-  displacement = cbind(-error$a-error$b,
-                       0.577*error$a-0.577*error$b)#wie in Paper, aber x und y vertauscht!
+  displacement = cbind(-error$c3-error$c1,
+                       0.577*error$c3-0.577*error$c1)#wie in Paper, aber x und y vertauscht!
 
   shifted_centers = ordered_centers + 1/sqrt(3)/error_scale*displacement
 
@@ -87,7 +91,11 @@ plot.calibration_simplex = function(x,
   start = centers_extremes+shift_start
   end = centers_extremes[c(2,3,1),]+shift_end
   arrows(start$x,start$y,end$x,end$y,length = 0.1)
-  text((start+end+0.5*(shift_start+shift_end))/2,labels=expression(p[a],p[n],p[b]))
+  text((start+end+0.5*(shift_start+shift_end))/2,
+       labels=as.expression(c(bquote(p[.(category_labels[3])]),
+                                                                        bquote(p[.(category_labels[2])]),
+                                                                        bquote(p[.(category_labels[1])]))),
+       adj = 0.2)
   label_coords = rbind(centers_extremes+0.67*shift_end,end-0.33*shift_end)
   rot = c(30,0,-30)
   for(i in 1:3) {

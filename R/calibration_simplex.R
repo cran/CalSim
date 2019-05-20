@@ -7,38 +7,58 @@
 #' aware that some minor changes have been made compared to the calibration simplex as suggested by Wilks, 2013 (cf. note below).
 #'
 #' @param n A natural number.
-#' @param p_a A vector containing the forecasted probabilities for the above-normal (3) category.
-#' @param p_n A vector containing the forecasted probabilities for the near-normal (2) category.
-#' @param p_b A vector containing the forecasted probabilities for the below-normal (1) category.
-#' @param obs A vector containing the observed outcomes (Categories are encoded as 1 (below-normal), 2 (near-normal) and 3 (above-normal)).
+#' @param p1 A vector containing the forecasted probabilities for the first (1) category, e.g. below-normal.
+#' @param p2 A vector containing the forecasted probabilities for the second (2) category, e.g. near-normal.
+#' @param p3 A vector containing the forecasted probabilities for the third (3) category, e.g. above-normal.
+#' @param obs A vector containing the observed outcomes (Categories are encoded as 1 (e.g. below-normal), 2 (e.g. near-normal) and 3 (e.g. above-normal)).
 #' @param percentagewise Logical, specifying whether probabilities are percentagewise (summing to 100) or not (summing to 1).
+#' @param p_a (deprecated) Use p3 instead! A vector containing the forecasted probabilities for the above-normal (3) category.
+#' @param p_n (deprecated) Use p2 instead! A vector containing the forecasted probabilities for the near-normal (2) category.
+#' @param p_b (deprecated) Use p1 instead! A vector containing the forecasted probabilities for the below-normal (1) category.
 #'
 #' @rdname calibration_simplex
 #' @export
 #'
-#' @details Only two of the three forecast probability vectors (\code{p_a}, \code{p_b} and \code{p_n}) need to be specified.
+#' @details Only two of the three forecast probability vectors (\code{p1}, \code{p2} and \code{p3}) need to be specified.
 #'
 #' @examples
-#' #install.packages("scoring") #if this package is not installed already
-#' data("WeatherProbs", package = "scoring")
+#' attach(ternary_forecast_example)   #see also documentation of sample data
+#' # ?ternary_forecast_example
 #'
-#' #Calibration Simplex for Temprature Forecasts
-#' cst = calibration_simplex(p_a = WeatherProbs$tabv,
-#'                           p_b = WeatherProbs$tblw,
-#'                           obs=WeatherProbs$tcat)
-#' plot(cst)
-#' plot(cst,error_scale=1)
+#' # Calibrated forecast sample
+#' calsim0 = calibration_simplex(p1 = p1, p3 = p3, obs = obs0)
+#' plot(calsim0)
 #'
-#' #Calibration Simplex for Precipitation Forecasts
-#' csp = calibration_simplex(n=19,
-#'                           p_a = WeatherProbs$pabv,
-#'                           p_b = WeatherProbs$pblw,
-#'                           obs=WeatherProbs$pcat)
-#' plot(csp)
-#' plot(csp,error_scale=1)
+#' #Overconfident forecast sample
+#' calsim1 = calibration_simplex(p1 = p1, p3 = p3, obs = obs1)
+#' plot(calsim1)
 #'
-#' #Both forecasts are very(!) underconfident. This seems like an unrealistic example!
+#' #Underconfident forecast sample
+#' calsim2 = calibration_simplex(p1 = p1, p3 = p3, obs = obs2)
+#' plot(calsim2)
 #'
-calibration_simplex = function(n,p_a,p_n,p_b,obs,percentagewise){
+#' #Unconditionally biased forecast sample
+#' calsim3 = calibration_simplex(p1 = p1, p3 = p3, obs = obs3)
+#' plot(calsim3)
+#'
+#' #Using a different number of bins
+#' calsim = calibration_simplex(n=4, p1 = p1, p3 = p3, obs = obs3)
+#' plot(calsim)
+#'
+#' calsim = calibration_simplex(n=13, p1 = p1, p3 = p3, obs = obs3)
+#' plot(calsim)
+#'
+#' #Using some additional plotting parameters
+#' plot(calsim,
+#'      error_scale = 0.5,    #errors are less pronounced (smaller shifts)
+#'      min_bin_freq = 100,   #dots are plotted only for bins,
+#'                            #which contain at least 100 forecast-outcome pairs
+#'      category_labels = c("below-normal","near-normal","above-normal"),
+#'      main = "Sample calibration simplex")
+#'
+#' detach(ternary_forecast_example)
+
+
+calibration_simplex = function(n,p1,p2,p3,obs,percentagewise,p_a,p_n,p_b){
   UseMethod("calibration_simplex")
 }
