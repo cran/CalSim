@@ -1,13 +1,13 @@
 #' Ternary probability forecast and observations.
 #'
-#' 50,000 realizations of a ternary probability forecast, which exhibits different characteristics, 
-#' depending on the realizing outcome variable. Idealized forecast example, generated as described in Wilks, 2013.
+#' 10,000 realizations of a ternary probability forecast, which exhibits different characteristics, 
+#' depending on the realizing outcome variable. Idealized forecast example, generated as described in Wilks (2013).
 #' 
 #' @docType data
 #' 
 #' @usage data(ternary_forecast_example)
 #' 
-#' @format A data frame with 50,000 rows and 6 variables.
+#' @format A data frame with 10,000 rows and 6 variables.
 #' \describe{
 #'   \item{p1}{forecast probability for outcome 1}
 #'   \item{p3}{forecast probability for outcome 3}

@@ -1,4 +1,4 @@
-#Function returning the relative frequency of each bin.
+#Function returning the relative frequency in each bin.
 
 rel_freq = function(x) {
   UseMethod("rel_freq")

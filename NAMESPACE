@@ -3,6 +3,7 @@
 S3method(calibration_simplex,default)
 S3method(plot,calibration_simplex)
 export(calibration_simplex)
+importFrom(ExactMultinom,multinom_test_cpp)
 importFrom(graphics,arrows)
 importFrom(graphics,axis)
 importFrom(graphics,par)

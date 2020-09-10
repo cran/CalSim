@@ -4,10 +4,19 @@
 \alias{plot.calibration_simplex}
 \title{Plot Calibration Simplex}
 \usage{
-\method{plot}{calibration_simplex}(x, true_error = TRUE,
-  error_scale = 0.3, min_bin_freq = 10, plot_error_scale = TRUE,
-  scale_area = NULL, indicate_bins = TRUE, category_labels = c("1",
-  "2", "3"), ...)
+\method{plot}{calibration_simplex}(
+  x,
+  true_error = TRUE,
+  error_scale = 0.3,
+  min_bin_freq = 10,
+  plot_error_scale = TRUE,
+  scale_area = NULL,
+  indicate_bins = TRUE,
+  category_labels = c("1", "2", "3"),
+  use_pvals = FALSE,
+  alphas = c(0.1, 0.01),
+  ...
+)
 }
 \arguments{
 \item{x}{Object of class \code{calibration_simplex}}
@@ -28,11 +37,28 @@ for it to be plotted.}
 
 \item{category_labels}{A vector of length 3 containing the category names, e.g. \code{c("1","2","3")} (default)}
 
+\item{use_pvals}{Logical, determines whether multinomial p-values are used for uncertainty quantification, see details.}
+
+\item{alphas}{Vector of length 2 with values 1 > \code{alphas[1]} > \code{alphas[2]} >= 0.0001. Only relevant if \code{use_pvals = TRUE}.}
+
 \item{...}{Arguments concerning the title (e.g. \code{main}, \code{cex.main}, \code{col.main} and \code{font.main})
 and subtitle (e.g. \code{sub}, \code{cex.sub}, \code{col.sub} and \code{font.sub}) may be passed here.}
 }
 \description{
 Plot Calibration Simplex
+}
+\details{
+If multinomial p-values are used (\code{use_pvals = TRUE}), the dots are colored in the following way:
+\itemize{
+  \item Blue: p-value greater \code{alphas[1]} (0.1 by default).
+  \item Orange: p-value between \code{alphas[1]} and \code{alphas[2]} (0.1 and 0.01 by default)
+  \item Red: p-value less than \code{alphas[2]} (0.01 by default)
+  \item Black: p-value is exactly 0. This only happens if a category which is assigned 0 probability realizes.
+}
+Many small p-values (orange and red dots) indicate miscalibrated predictions, whereas many blue dots indicate that the predictions 
+may in fact be calibrated. WARNING: The use of the multinomial p-values is more of an experimental feature and may not yield reliable 
+p-values, especially if \code{n} is small.
+For details regarding the calculation of the p-values see also \code{\link{calibration_simplex}}.
 }
 \note{
 For details on the meaning of the error scale, cf. Wilks, 2013, especially Fig. 2. Note that the miscalibration error in
