@@ -1,3 +1,6 @@
+# CalSim 0.5.2
+- adapted to new structure of spatstat 2.0
+
 # CalSim 0.5.1
 1. introduced multinomial tests
 
