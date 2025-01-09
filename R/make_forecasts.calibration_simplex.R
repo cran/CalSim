@@ -5,6 +5,8 @@ make_forecasts = function(x) {
   UseMethod("make_forecasts")
 }
 
+#' @export
+
 make_forecasts.calibration_simplex = function(x) {
   n = x$n
   n_bins = x$n_bins

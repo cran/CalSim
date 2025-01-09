@@ -11,15 +11,17 @@
 #' @param indicate_bins Logical, specifying whether to connect points to their respective bin (center of hexagon).
 #' @param category_labels A vector of length 3 containing the category names, e.g. \code{c("1","2","3")} (default)
 #' @param use_pvals Logical, determines whether multinomial p-values are used for uncertainty quantification, see details.
-#' @param alphas Vector of length 2 with values 1 > \code{alphas[1]} > \code{alphas[2]} >= 0.0001. Only relevant if \code{use_pvals = TRUE}. 
+#' @param alphas Vector of length 2 with values 1 > \code{alphas[1]} > \code{alphas[2]} >= 0.0001. Only relevant if \code{use_pvals = TRUE}.
+#' @param colors Vector of length 4 specifying colors, defaults to \code{c("blue","orange","red","black")}. 
+#' Coloring used for p-values, see details. Only relevant if \code{use_pvals = TRUE}. 
 #' @param ... Arguments concerning the title (e.g. \code{main}, \code{cex.main}, \code{col.main} and \code{font.main})
 #'            and subtitle (e.g. \code{sub}, \code{cex.sub}, \code{col.sub} and \code{font.sub}) may be passed here.
 #' @details If multinomial p-values are used (\code{use_pvals = TRUE}), the dots are colored in the following way:
 #' \itemize{
-#'   \item Blue: p-value greater \code{alphas[1]} (0.1 by default).
-#'   \item Orange: p-value between \code{alphas[1]} and \code{alphas[2]} (0.1 and 0.01 by default)
-#'   \item Red: p-value less than \code{alphas[2]} (0.01 by default)
-#'   \item Black: p-value is exactly 0. This only happens if a category which is assigned 0 probability realizes.
+#'   \item \code{colors[1]} (blue by default): p-value greater \code{alphas[1]} (0.1 by default).
+#'   \item \code{colors[2]} (orange by default): p-value between \code{alphas[1]} and \code{alphas[2]} (0.1 and 0.01 by default)
+#'   \item \code{colors[3]} (red by default): p-value less than \code{alphas[2]} (0.01 by default)
+#'   \item \code{colors[4]} (black by default): p-value is exactly 0. This only happens if a category which is assigned 0 probability realizes.
 #' }
 #' Many small p-values (orange and red dots) indicate miscalibrated predictions, whereas many blue dots indicate that the predictions 
 #' may in fact be calibrated. WARNING: The use of the multinomial p-values is more of an experimental feature and may not yield reliable 
@@ -39,8 +41,6 @@
 #' @import spatstat
 
 plot.calibration_simplex = function(x,
-                                    #alpha = 0.05,
-                                    
                                     true_error = TRUE,
                                     error_scale = 0.3,
                                     min_bin_freq = 10,
@@ -50,6 +50,7 @@ plot.calibration_simplex = function(x,
                                     category_labels = c("1","2","3"),
                                     use_pvals = FALSE,
                                     alphas = c(0.1,0.01),
+                                    colors = c("blue","orange","red","black"),
                                     ...) {
   par_old <- par(no.readonly = TRUE)
   on.exit(par(par_old))
@@ -64,18 +65,11 @@ plot.calibration_simplex = function(x,
   if(is.null(scale_area)) scale_area = (n/10)^2
 
   # Testing
-
-  # tests = x$pvals > alpha
-  # test_col = ifelse(tests,"blue","red")
-  # test_col[x$pvals == -1] = "violet"
-
-  #tests = x$pvals > alpha
-  test_col = ifelse(x$pvals >= alphas[1],"blue",ifelse(x$pvals >= alphas[2],"orange","red"))
-  test_col[x$pvals == -1] = "black"
-  test_col[is.na(test_col)] = "black"
+  test_col = ifelse(x$pvals >= alphas[1],colors[1],ifelse(x$pvals >= alphas[2],colors[2],colors[3]))
+  test_col[x$pvals == -1] = colors[4]
+  test_col[is.na(test_col)] = colors[4]
 
   # Plotting
-
   triangle= function(centers = F) {
     a = n - 1
     if(a == 0) a= 0.01 # allows to plot one bin (n = 1)

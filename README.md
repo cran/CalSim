@@ -1,4 +1,4 @@
-# CalSim 0.5.2
+# CalSim 0.5.3
 
 R-package to generate the calibration simplex (a generalization of the reliability diagram) for three-category probability forecasts, as proposed by Wilks (2013) <https://www.doi.org/10.1175/WAF-D-13-00027.1>.
 

@@ -15,6 +15,7 @@
   category_labels = c("1", "2", "3"),
   use_pvals = FALSE,
   alphas = c(0.1, 0.01),
+  colors = c("blue", "orange", "red", "black"),
   ...
 )
 }
@@ -41,6 +42,9 @@ for it to be plotted.}
 
 \item{alphas}{Vector of length 2 with values 1 > \code{alphas[1]} > \code{alphas[2]} >= 0.0001. Only relevant if \code{use_pvals = TRUE}.}
 
+\item{colors}{Vector of length 4 specifying colors, defaults to \code{c("blue","orange","red","black")}. 
+Coloring used for p-values, see details. Only relevant if \code{use_pvals = TRUE}.}
+
 \item{...}{Arguments concerning the title (e.g. \code{main}, \code{cex.main}, \code{col.main} and \code{font.main})
 and subtitle (e.g. \code{sub}, \code{cex.sub}, \code{col.sub} and \code{font.sub}) may be passed here.}
 }
@@ -50,10 +54,10 @@ Plot Calibration Simplex
 \details{
 If multinomial p-values are used (\code{use_pvals = TRUE}), the dots are colored in the following way:
 \itemize{
-  \item Blue: p-value greater \code{alphas[1]} (0.1 by default).
-  \item Orange: p-value between \code{alphas[1]} and \code{alphas[2]} (0.1 and 0.01 by default)
-  \item Red: p-value less than \code{alphas[2]} (0.01 by default)
-  \item Black: p-value is exactly 0. This only happens if a category which is assigned 0 probability realizes.
+  \item \code{colors[1]} (blue by default): p-value greater \code{alphas[1]} (0.1 by default).
+  \item \code{colors[2]} (orange by default): p-value between \code{alphas[1]} and \code{alphas[2]} (0.1 and 0.01 by default)
+  \item \code{colors[3]} (red by default): p-value less than \code{alphas[2]} (0.01 by default)
+  \item \code{colors[4]} (black by default): p-value is exactly 0. This only happens if a category which is assigned 0 probability realizes.
 }
 Many small p-values (orange and red dots) indicate miscalibrated predictions, whereas many blue dots indicate that the predictions 
 may in fact be calibrated. WARNING: The use of the multinomial p-values is more of an experimental feature and may not yield reliable 

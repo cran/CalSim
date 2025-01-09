@@ -5,6 +5,8 @@ error = function(x,true_error) {
   UseMethod("error")
 }
 
+#' @export
+
 error.calibration_simplex = function(x,
                                      true_error = TRUE) {
 

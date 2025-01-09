@@ -54,13 +54,13 @@ for binary probability forecasts. For details on the interpretation of the calib
 aware that some minor changes have been made compared to the calibration simplex as suggested by Wilks (2013) (see note below).
 
 As a somewhat experimental feature, multinomial p-values can be used for uncertainty quantification, that is, as a tool
-to judge whether the observed discrepancies may be merely coincidental or whether the predictions may in fact be miscalibrated, see Resin (2020, Section 4.2).
+to judge whether the observed discrepancies may be merely coincidental or whether the predictions may in fact be miscalibrated, see Resin (2023, Section 4.2).
 }
 \details{
 Only two of the three forecast probability vectors (\code{p1}, \code{p2} and \code{p3}) need to be specified.
 
 The p-values are based on multinomial tests comparing the observed frequencies within a bin 
-with the average forecast probabilities within the bin as outlined in Resin (2020, Section 4.2).
+with the average forecast probabilities within the bin as outlined in Resin (2023, Section 4.2).
 The p-values are exact and do not rely on asymptotics, however, it is assumed that the true 
 distribution (under the hypothesis of forecast calibration) within each bin 
 is approximated well by the multinomial distribution. If \code{n} is small the 
@@ -109,9 +109,9 @@ plot(calsim,               # using some additional plotting parameters:
 detach(ternary_forecast_example)
 }
 \references{
-Daniel S. Wilks, 2013, The Calibration Simplex: A Generalization of the Reliability Diagram for Three-Category Probability Forecasts, \emph{Weather and Forecasting}, \strong{28}, 1210-1218
+Wilks, D. S. (2013). The Calibration Simplex: A Generalization of the Reliability Diagram for Three-Category Probability Forecasts. \emph{Weather and Forecasting}, \strong{28}, 1210-1218.
 
-Resin, J. (2020), A Simple Algorithm for Exact Multinomial Tests, \emph{Preprint} \url{https://arxiv.org/abs/2008.12682}
+Resin, J. (2023). A Simple Algorithm for Exact Multinomial Tests. \emph{Journal of Computational and Graphical Statistics} \strong{32}, 539-550.
 }
 \seealso{
 \code{\link{plot.calibration_simplex}}

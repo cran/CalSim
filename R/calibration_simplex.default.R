@@ -9,9 +9,9 @@
 #' average forecast probabilities) instead of approximately (using Wilks original formula).
 #' Approximate errors can be used by setting \code{true_error = FALSE} when using \code{\link{plot.calibration_simplex}}.
 #'
-#' @references Daniel S. Wilks, 2013, The Calibration Simplex: A Generalization of the Reliability Diagram for Three-Category Probability Forecasts, \emph{Weather and Forecasting}, \strong{28}, 1210-1218
-#' @references Resin, J. (2020), A Simple Algorithm for Exact Multinomial Tests, \emph{Preprint} \url{https://arxiv.org/abs/2008.12682}
-#' 
+#' @references Wilks, D. S. (2013). The Calibration Simplex: A Generalization of the Reliability Diagram for Three-Category Probability Forecasts. \emph{Weather and Forecasting}, \strong{28}, 1210-1218.
+#' @references Resin, J. (2023). A Simple Algorithm for Exact Multinomial Tests. \emph{Journal of Computational and Graphical Statistics} \strong{32}, 539-550.
+#'  
 #' @seealso \code{\link{plot.calibration_simplex}}
 #' @seealso \code{\link{ternary_forecast_example}}
 #'
@@ -120,9 +120,9 @@ calibration_simplex.default = function(n = 10,
       if(out$freq[bin] > 0){
         x = out$cond_rel_freq[bin,]*out$freq[bin]
         p = out$cond_ave_prob[bin,]
-        if(all(p > 0)) out$pvals[bin] = multinom_test_cpp(x,p)[stat]
+        if(all(p > 0)) out$pvals[bin] = multinom_test_cpp(x[order(p,decreasing = TRUE)],p[order(p,decreasing = TRUE)])[stat]
         else if(sum(p>0) == 2){
-          if(x[!(p>0)] == 0) out$pvals[bin] = multinom_test_cpp(x[p>0],p[p>0])[stat]
+          if(x[!(p>0)] == 0) out$pvals[bin] = multinom_test_cpp(x[p>0][order(p[p>0],decreasing = TRUE)],p[p>0][order(p[p>0],decreasing = TRUE)])[stat]
           else out$pvals[bin] = -1
         }
         else if(sum(p>0) == 1){

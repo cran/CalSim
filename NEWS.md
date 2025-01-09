@@ -1,3 +1,7 @@
+# CalSim 0.5.4
+- additional issues caused by ExactMultinom (v0.1.2) fixed by using new version 0.1.3
+- updated documentation
+
 # CalSim 0.5.2
 - adapted to new structure of spatstat 2.0
 
